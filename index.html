@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='70' font-size='80'%3E%E2%98%95%EF%B8%8F%3C/text%3E%3C/svg%3E">
 <title>Youssef's Digital Twin Engineering Journey</title>
 
 <!-- Tailwind helpers + fonts -->
@@ -205,6 +206,12 @@ body::before{
   border-image:var(--reel-border-light) 1;
   transition:background .4s ease, color .4s ease, border-image .4s ease;
   isolation:isolate;
+}
+@media(max-width:640px){
+  .reel-section{
+    margin-top:clamp(.2rem,1.5vw,.6rem);
+    margin-bottom:clamp(1rem,3vw,2rem);
+  }
 }
 .reel-track{
   display:flex;
@@ -434,8 +441,8 @@ main{
   .art-frame{
     flex-direction:column;
     align-items:center;
-    padding: 1.8rem var(--row-pad-inline) 2.6rem;
-    gap:1.6rem;
+    padding: 1.3rem var(--row-pad-inline) 0.6rem;
+    gap:1.1rem;
   }
   .art-copy{
     width:100%;
