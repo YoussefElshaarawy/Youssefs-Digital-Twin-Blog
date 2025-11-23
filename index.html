@@ -197,8 +197,8 @@ body::before{
   width:100%;
   padding:clamp(3rem,6vw,4.5rem) 0;
   margin:clamp(2.5rem,6vw,4.5rem) 0;
-  transform:skewY(-2deg);
   overflow:hidden;
+  contain:layout paint;
   background:var(--reel-bg-light);
   color:#141b33;
   border-top:4px solid;
@@ -206,6 +206,7 @@ body::before{
   border-image:var(--reel-border-light) 1;
   transition:background .4s ease, color .4s ease, border-image .4s ease;
   isolation:isolate;
+  touch-action:pan-y;
 }
 @media(max-width:640px){
   .reel-section{
@@ -215,11 +216,13 @@ body::before{
 }
 .reel-track{
   display:flex;
+  align-items:center;
   gap:0;
   width:max-content;
+  min-width:200%;
   white-space:nowrap;
   will-change:transform;
-  animation:reel-slide 20s linear infinite;
+  animation:reel-slide var(--reel-duration, 20s) linear infinite;
 }
 .reel-item{
   font-family:'Roboto Flex',sans-serif;
@@ -267,6 +270,12 @@ body::before{
 @keyframes marquee-pan{
   from{transform:translateX(0);}
   to{transform:translateX(-50%);}
+}
+@media (prefers-reduced-motion:reduce){
+  .reel-track{
+    animation:none;
+    transform:none;
+  }
 }
 .dark .reel-section{
   background:var(--reel-bg-dark);
@@ -412,6 +421,22 @@ main{
   hyphens: auto;
   color:#111;
 }
+.art-copy a{
+  color:#0a5fd7;
+  text-decoration:underline;
+  text-decoration-thickness:2px;
+  text-underline-offset:3px;
+  font-weight:600;
+  transition:color .25s ease, text-decoration-color .25s ease;
+}
+.art-copy a:hover,
+.art-copy a:focus-visible{
+  color:#063f96;
+  text-decoration-color:currentColor;
+}
+.dark .art-copy a{color:#7ab7ff;}
+.dark .art-copy a:hover,
+.dark .art-copy a:focus-visible{color:#a9d1ff;}
 .dark .art-copy p{ color:#f5f1e6; }
 
 /* UPDATED: collage on the right, aligned with text */
@@ -674,6 +699,7 @@ main{
   display:inline-block;
   color:#444;
 }
+.dark .panel-kicker{color:rgba(245,241,230,.7);}
 .panel-headline{
   margin:0 0 2rem;
   font-size:clamp(2rem,5vw,3.6rem);
@@ -987,7 +1013,7 @@ main{
   border-color:rgba(255,255,255,.25);
   box-shadow:0 45px 110px rgba(0,0,0,.85);
 }
-.dark .panel-card.coming-panel .panel-kicker{color:#f5f1e6;}
+.dark .panel-card.coming-panel .panel-kicker{color:rgba(245,241,230,.78);}
 .dark .marquee-ribbon{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.35);}
 .dark .marquee-track{color:rgba(245,241,230,.78);}
 .dark .coming-quote{border-color:rgba(255,255,255,.45);}
