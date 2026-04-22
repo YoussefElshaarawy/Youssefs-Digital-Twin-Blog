@@ -5,13 +5,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext x='50%25' y='68%25' text-anchor='middle' font-size='80'%3E%E2%98%95%EF%B8%8F%3C/text%3E%3C/svg%3E">
 <link rel="shortcut icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext x='50%25' y='68%25' text-anchor='middle' font-size='80'%3E%E2%98%95%EF%B8%8F%3C/text%3E%3C/svg%3E">
-<title>Youssef's Blog | AI, Robotics, and Digital Twins</title>
+<title>Youssef's Demos | AI, Robotics, and Digital Twins</title>
 
 <!-- Tailwind helpers + fonts -->
 <script src="https://cdn.tailwindcss.com"></script>
 <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,200..900&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,400..600,0..1,-50..200" rel="stylesheet">
+<link rel="preload" as="image" href="Ko-Br-DemoDay.png">
+<link rel="preload" as="image" href="Ko-Br-DemoDay-DarkMode.png">
+<link rel="preload" as="image" href="NTI-Image.png">
+<link rel="preload" as="image" href="NTI-Image_Dark.png">
 
 <style>
 /* ========== GLOBAL ================================================= */
@@ -32,10 +36,6 @@
   --copy-top:  7vh;      /* vertical position of the block */
   --copy-width: 30vw;    /* width of the text column */
   --copy-text: 0.88rem;  /* a bit smaller */
-  --copy-star: 4.8vw;    /* 2× bigger */
-  --star-filter-light: drop-shadow(0 1px 2px rgba(0,0,0,.18));
-  --star-filter-dark: invert(1) brightness(1.25) drop-shadow(0 1px 3px rgba(0,0,0,.6));
-  --star-filter: var(--star-filter-light);
   --tone-iot: #e0f1ff;
   --tone-robotics: #f4ecff;
   --tone-industry: #fff1e0;
@@ -45,14 +45,6 @@
   --dark-accent-teal: #3bd4ff;
   --dark-accent-violet: #bb9dff;
   --dark-accent-amber: #fbc16d;
-  /* Reel palette */
-  --reel-bg-light: linear-gradient(120deg, #e9f1ff 0%, #ede7ff 50%, #e3f7ff 100%);
-  --reel-border-light: linear-gradient(90deg, rgba(77,160,255,.75), rgba(157,123,255,.9));
-  --reel-hover-light: linear-gradient(120deg, #4da0ff 0%, #6b7dff 45%, #a770ef 100%);
-  --reel-hover-light-outline: rgba(85,101,201,0.4);
-  --reel-bg-dark: #050505;
-  --reel-border-dark: linear-gradient(90deg, #ffd600, #fff8db);
-  --reel-hover-dark: linear-gradient(90deg, #ffd600 0%, #ff9900 50%, #fff8db 100%);
 }
 *{box-sizing:border-box}
 html,body{min-height:100%;}
@@ -189,7 +181,6 @@ body::before{
 #badge text{ font-family:'Roboto Flex',sans-serif; font-size:var(--fsize); font-weight:400; letter-spacing:.06em; dominant-baseline:middle; text-anchor:middle; fill:#000; }
 
 /* ===================== Dark mode ===================== */
-.dark{ --star-filter: var(--star-filter-dark); }
 .dark body{
   background:
     radial-gradient(circle at 65% 0%, rgba(6,12,32,.65), transparent 55%),
@@ -210,113 +201,9 @@ body::before{
 .dark #badge text{ fill:#f5f1e6; }
 .dark #themeToggle{ background:rgba(18,18,18,.55); border-color:rgba(255,255,255,.14); color:#f5f1e6; }
 
-/* ===== kinetic reel ticker ===== */
-.reel-section{
-  position:relative;
-  width:100%;
-  padding:clamp(3rem,6vw,4.5rem) 0;
-  margin:clamp(2.5rem,6vw,4.5rem) 0;
-  overflow:hidden;
-  contain:layout paint;
-  background:var(--reel-bg-light);
-  color:#141b33;
-  border-top:4px solid;
-  border-bottom:4px solid;
-  border-image:var(--reel-border-light) 1;
-  transition:background .4s ease, color .4s ease, border-image .4s ease;
-  isolation:isolate;
-  touch-action:pan-y;
-}
-@media(max-width:640px){
-  .reel-section{
-    margin-top:clamp(.2rem,1.5vw,.6rem);
-    margin-bottom:clamp(1rem,3vw,2rem);
-  }
-}
-.reel-track{
-  display:flex;
-  align-items:center;
-  gap:0;
-  width:max-content;
-  min-width:200%;
-  white-space:nowrap;
-  will-change:transform;
-  animation:reel-slide var(--reel-duration, 20s) linear infinite;
-}
-.reel-item{
-  font-family:'Roboto Flex',sans-serif;
-  font-size:clamp(3.5rem,8vw,6.5rem);
-  text-transform:uppercase;
-  line-height:.9;
-  padding:0 1.6vw;
-  font-variation-settings:'wght' 900,'wdth' 85,'slnt' 0;
-  transition:all .4s ease;
-  opacity:.9;
-  cursor:default;
-}
-.reel-item.outline{
-  -webkit-text-stroke:2px color-mix(in srgb, #5b6bff 70%, #7ad3ff 30%);
-  color:transparent;
-  opacity:.35;
-}
-.reel-section:hover .reel-track{ animation-play-state:paused; }
-.reel-item:hover{
-  background:var(--reel-hover-light);
-  background-size:200% auto;
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-  font-variation-settings:'wght' 300,'wdth' 150,'slnt' -5;
-  opacity:1;
-  text-shadow:0 0 30px rgba(82,110,255,.35);
-  animation:shine 2s linear infinite;
-}
-.reel-item.outline:hover{
-  -webkit-text-stroke:0;
-  background:var(--reel-hover-light);
-  background-size:200% auto;
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-  opacity:1;
-  animation:shine 2s linear infinite;
-}
-@keyframes reel-slide{
-  from{transform:translateX(0);}
-  to{transform:translateX(-50%);}
-}
-@keyframes shine{
-  to{background-position:200% center;}
-}
 @keyframes marquee-pan{
   from{transform:translateX(0);}
   to{transform:translateX(-50%);}
-}
-@media (prefers-reduced-motion:reduce){
-  .reel-track{
-    animation:none;
-    transform:none;
-  }
-}
-.dark .reel-section{
-  background:var(--reel-bg-dark);
-  color:#fff;
-  border-image:var(--reel-border-dark) 1;
-}
-.dark .reel-item.outline{
-  color:transparent;
-  -webkit-text-stroke:2px color-mix(in srgb, rgba(255,255,255,.55) 70%, var(--dark-accent-violet) 30%);
-  opacity:.38;
-}
-.dark .reel-item.outline:hover{
-  -webkit-text-stroke:0;
-}
-.dark .reel-item:hover,
-.dark .reel-item.outline:hover{
-  background:var(--reel-hover-dark);
-  background-size:200% auto;
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-  font-variation-settings:'wght' 300,'wdth' 150,'slnt' -5;
-  text-shadow:0 0 30px rgba(255,214,0,.45);
 }
 
 /* ===================== ROW LAYOUT ===================== */
@@ -411,23 +298,6 @@ main{
   display:flex;
   gap:16px;
   align-items:flex-start;
-}
-.art-copy img.star{
-  width: clamp(26px, var(--copy-star), 100px);
-  height:auto;
-  animation: twinkle 2.4s infinite steps(2, jump-none);
-  filter: drop-shadow(0 1px 2px rgba(0,0,0,.2));
-  -webkit-filter: drop-shadow(0 1px 2px rgba(0,0,0,.2));
-  transform-origin: 50% 50%;
-  transition: filter .35s ease;
-}
-.art-copy img.star.is-dark{
-  filter: invert(1) brightness(1.25) drop-shadow(0 1px 3px rgba(0,0,0,.6));
-  -webkit-filter: invert(1) brightness(1.25) drop-shadow(0 1px 3px rgba(0,0,0,.6));
-}
-@keyframes twinkle{
-  0%,100%{opacity:.95; transform:rotate(0deg) scale(1);}
-  50%{opacity:.5; transform:rotate(8deg) scale(1.08);}
 }
 .art-copy p{
   margin:0;
@@ -570,6 +440,7 @@ main{
 .row-insights,
 .row-panels,
 .row-timeline,
+.demo-gallery,
 .row-cta{
   padding: clamp(1.5rem, 5vw, 4rem) var(--row-pad-inline);
 }
@@ -958,6 +829,202 @@ main{
 .timeline-item strong{font-size:1.4rem;line-height:1;color:#000;}
 .timeline-item p{margin:0;color:#333;}
 
+.demo-gallery{
+  display:flex;
+  flex-direction:column;
+  gap:clamp(4rem, 9vw, 8rem);
+  padding:clamp(1.5rem, 4vw, 3.5rem) clamp(18px, 2.6vw, 52px) clamp(2rem, 5vw, 4rem);
+}
+.demo-showcase{
+  display:flex;
+  flex-direction:column;
+  gap:clamp(1.1rem, 2vw, 1.8rem);
+}
+.demo-link{
+  color:inherit;
+  text-decoration:none;
+}
+.demo-link:focus-visible .demo-media{
+  outline:3px solid #35e8c7;
+  outline-offset:5px;
+}
+.demo-media{
+  position:relative;
+  width:100%;
+  aspect-ratio:2.1 / 1;
+  min-height:clamp(420px, 48vw, 760px);
+  overflow:hidden;
+  background:#eceff3;
+  box-shadow:0 26px 80px rgba(8,12,18,.13);
+  isolation:isolate;
+  transition:transform .35s ease, box-shadow .35s ease;
+}
+.demo-link:hover .demo-media{
+  transform:translateY(-4px);
+  box-shadow:0 34px 90px rgba(8,12,18,.2);
+}
+.demo-image{
+  width:100%;
+  height:100%;
+  display:block;
+  object-fit:cover;
+}
+.demo-raytracer{
+  width:100%;
+  height:100%;
+  display:block;
+  border:0;
+  pointer-events:auto;
+  background:transparent;
+  cursor:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Ctext x='16' y='23' font-size='24' text-anchor='middle'%3E%F0%9F%91%80%3C/text%3E%3C/svg%3E") 16 16, auto !important;
+}
+.demo-showcase[data-section="2"],
+.demo-showcase[data-section="2"] .demo-media,
+.demo-showcase[data-section="2"] .demo-raytracer{
+  cursor:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Ctext x='16' y='23' font-size='24' text-anchor='middle'%3E%F0%9F%91%80%3C/text%3E%3C/svg%3E") 16 16, auto !important;
+}
+.demo-raytracer.is-idle{opacity:0;}
+.demo-poster{
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+}
+.demo-poster-cloud{
+  background:
+    radial-gradient(circle at 22% 22%, rgba(255,255,255,.75), transparent 22%),
+    radial-gradient(circle at 76% 78%, rgba(173,217,255,.42), transparent 28%),
+    linear-gradient(145deg, #f5f2e8, #edf5fb 52%, #dcefff);
+}
+.dark .demo-poster-cloud{
+  background:
+    radial-gradient(circle at 20% 20%, rgba(148,205,255,.18), transparent 24%),
+    radial-gradient(circle at 78% 74%, rgba(255,180,120,.12), transparent 26%),
+    linear-gradient(145deg, #0d1015, #121923 52%, #0a0c10);
+}
+.demo-media::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(180deg, transparent 45%, rgba(0,0,0,.5));
+  pointer-events:none;
+}
+.demo-media.raytracer-media::after{display:none;}
+.kobr-photo{
+  position:absolute;
+  z-index:2;
+  left:clamp(1.2rem, 4vw, 4rem);
+  top:50%;
+  margin:0;
+  height:min(82%, 46rem);
+  width:auto;
+  transform:translateY(-50%);
+  filter:drop-shadow(0 22px 34px rgba(0,0,0,.26));
+  pointer-events:none;
+}
+.nti-photo{
+  position:absolute;
+  z-index:2;
+  left:clamp(1.2rem, 4vw, 4rem);
+  top:50%;
+  margin:0;
+  height:min(82%, 46rem);
+  width:auto;
+  transform:translateY(-50%);
+  filter:drop-shadow(0 22px 34px rgba(0,0,0,.26));
+  pointer-events:none;
+}
+.kobr-photo img{
+  width:auto;
+  height:100%;
+  display:block;
+  opacity:0;
+  transform:translateY(.5rem) scale(.985);
+  transition:opacity .35s ease, transform .45s ease;
+}
+.nti-photo img{
+  width:auto;
+  height:100%;
+  display:block;
+  opacity:0;
+  transform:translateY(.5rem) scale(.985);
+  transition:opacity .35s ease, transform .45s ease;
+}
+.kobr-photo img.loaded{
+  opacity:1;
+  transform:translateY(0) scale(1);
+}
+.nti-photo img.loaded{
+  opacity:1;
+  transform:translateY(0) scale(1);
+}
+.demo-launch{
+  position:absolute;
+  left:clamp(1rem, 2.2vw, 2rem);
+  bottom:clamp(1rem, 2.2vw, 2rem);
+  z-index:1;
+  border-radius:8px;
+  border:1px solid rgba(255,255,255,.45);
+  background:rgba(0,0,0,.46);
+  color:#fff;
+  padding:.72rem .9rem;
+  font-size:.88rem;
+  backdrop-filter:blur(16px);
+}
+.demo-title{
+  margin:0;
+  color:#050505;
+  font-family:'Nunito Sans',system-ui,sans-serif;
+  font-size:clamp(2.6rem, 7vw, 7.2rem);
+  line-height:.9;
+  font-weight:720;
+  letter-spacing:.01em;
+  max-width:100%;
+  overflow-wrap:break-word;
+  text-wrap:balance;
+}
+.demo-showcase[data-section="1"] .demo-title{
+  display:none;
+}
+.demo-showcase[data-section="2"] .demo-title{
+  display:none;
+}
+.demo-showcase[data-section="2"] .demo-image{
+  object-position:center 42%;
+}
+.demo-showcase[data-section="3"] .demo-image{
+  object-position:center 48%;
+}
+@media(max-width:760px){
+  .demo-gallery{
+    gap:clamp(3rem, 12vw, 4.8rem);
+    padding:clamp(1rem, 5vw, 2rem) var(--row-pad-inline) clamp(1.5rem, 7vw, 2.8rem);
+  }
+  .demo-media{
+    aspect-ratio:4 / 5;
+    min-height:0;
+    box-shadow:0 18px 45px rgba(8,12,18,.14);
+  }
+  .demo-showcase[data-section="1"] .demo-image{
+    object-position:center center;
+  }
+  .kobr-photo{
+    display:none;
+  }
+  .nti-photo{
+    display:none;
+  }
+  .demo-title{
+    font-size:clamp(2.55rem, 12vw, 4.4rem);
+    line-height:.92;
+  }
+  .demo-showcase[data-section="1"] .demo-title{
+    display:block;
+  }
+  .demo-showcase[data-section="2"] .demo-title{
+    display:block;
+  }
+}
+
 .row-cta .cta-shell{
   border-radius:36px;
   padding:clamp(2.2rem,6vw,4rem);
@@ -1048,6 +1115,11 @@ main{
 .dark .timeline-shell::before{border-color:rgba(255,255,255,.08);}
 .dark .timeline-item strong{color:#f5f1e6;}
 .dark .timeline-item p{color:rgba(245,241,230,.8);}
+.dark .demo-media{
+  background:#10131b;
+  box-shadow:0 28px 80px rgba(0,0,0,.55);
+}
+.dark .demo-title{color:#f5f1e6;}
 .dark .row-cta .cta-shell{
   background:linear-gradient(140deg,
     color-mix(in srgb, var(--dark-accent-teal) 35%, #050505),
@@ -1093,186 +1165,69 @@ main{
 
 <!-- MAIN -->
 <main>
-  <!-- ROW 1: HERO -->
-  <section class="row-hero" aria-label="Copy Paste headline">
-    <h1>
-      <span class="hero-line">Hello</span>
-      <span class="hero-line">World!</span>
-    </h1>
-  </section>
-
-  <!-- ROW 2: ART -->
-  <section class="art-row" aria-label="Hero Artwork">
-    <div class="fullbleed">
-      <div class="art-frame">
-        <!-- LEFT justified paragraph + star -->
-        <div class="art-copy" id="artCopy" aria-label="Intro paragraph">
-          <img src="star.svg" alt="" class="star" aria-hidden="true" role="presentation">
-          <p>
-            I'm Youssef, and this blog is where I share the projects, ideas, and experiments shaping my work across AI, robotics, IoT, embedded systems, and digital twins. It started during my Digital Twin Engineering journey, but it has grown into a broader space for documenting what I'm building, what I'm learning, and how I think about designing intelligent systems that connect software with the real world.
-          </p>
-        </div>
-
-        <!-- Collage -->
-        <div class="art-canvas" id="artCanvas">
-          <img src="Updated-Home-Image.png" alt="Hero collage" class="art-img hero-collage" loading="lazy" decoding="async">
-        </div>
+  <section class="demo-gallery" aria-label="Demo sections">
+    <article class="demo-showcase" data-section="1" aria-label="Infinite Light Room ray tracer preview">
+      <div class="demo-media raytracer-media">
+        <iframe
+          id="raytracerPreview"
+          class="demo-raytracer"
+          src="raytracer.html"
+          data-light-src="raytracer.html"
+          data-dark-src="raytracer-night.html"
+          title="Infinite Light Room raytracer preview"
+          loading="eager"
+          allow="accelerometer; gyroscope"
+          aria-hidden="true"></iframe>
+        <figure class="kobr-photo" aria-label="Ko-Br Internship Demo Day">
+          <img
+            id="kobrDemoImage"
+            src="Ko-Br-DemoDay.png"
+            data-light-src="Ko-Br-DemoDay.png"
+            data-dark-src="Ko-Br-DemoDay-DarkMode.png"
+            width="750"
+            height="900"
+            alt="Ko-Br Internship Demo Day"
+            loading="eager"
+            fetchpriority="high"
+            decoding="async"
+            onload="this.classList.add('loaded')">
+        </figure>
       </div>
-    </div>
-  </section>
-
-  <!-- ROW 2.5: kinetic expertise reel -->
-  <section class="reel-section" aria-label="Expertise ticker">
-    <div class="reel-track">
-      <span class="reel-item">Internet of Things</span>
-      <span class="reel-item outline">///</span>
-      <span class="reel-item">Robotics</span>
-      <span class="reel-item outline">///</span>
-      <span class="reel-item">3D Modelling</span>
-      <span class="reel-item outline">///</span>
-      <span class="reel-item">ML & DeepLearning</span>
-      <span class="reel-item outline">///</span>
-      <span class="reel-item">Industry 4.0</span>
-      <span class="reel-item outline">///</span>
-      <span class="reel-item">Using MCP Servers</span>
-      <span class="reel-item outline">///</span>
-      <span class="reel-item">Tiny Models</span>
-      <span class="reel-item outline">///</span>
-      <span class="reel-item">PLCs</span>
-      <span class="reel-item outline">///</span>
-
-      <!-- duplicate for seamless loop -->
-      <span class="reel-item">Internet of Things</span>
-      <span class="reel-item outline">///</span>
-      <span class="reel-item">Robotics</span>
-      <span class="reel-item outline">///</span>
-      <span class="reel-item">3D Modelling</span>
-      <span class="reel-item outline">///</span>
-      <span class="reel-item">ML & DeepLearning</span>
-      <span class="reel-item outline">///</span>
-      <span class="reel-item">Industry 4.0</span>
-      <span class="reel-item outline">///</span>
-      <span class="reel-item">Using MCP Servers</span>
-      <span class="reel-item outline">///</span>
-      <span class="reel-item">Tiny Models</span>
-      <span class="reel-item outline">///</span>
-      <span class="reel-item">PLCs</span>
-      <span class="reel-item outline">///</span>
-    </div>
-  </section>
-
-  <!-- ROW 3: GUIDING PRINCIPLES -->
-  <section class="row-insights" aria-label="Guiding principles TL;DR">
-    <div class="section-label">BLOG GUIDING PRINCIPLES</div>
-    <div class="insights-grid">
-      <article class="insight-card" data-tone="iot">
-        <span class="principle-icon material-symbols-rounded" aria-hidden="true">handyman</span>
-        <small class="status">1. Build Tools, Not Theories</small>
-        <strong>Make things people can use right now.</strong>
-        <span>Code, workflows, fixes, prototypes.</span>
-        <span class="emoji-pattern" aria-hidden="true">🛠️</span>
-      </article>
-      <article class="insight-card" data-tone="robotics">
-        <span class="principle-icon material-symbols-rounded" aria-hidden="true">door_open</span>
-        <small class="status">2. Keep the Door Open</small>
-        <strong>Stay curious and collaborative.</strong>
-        <span>Share work in ways that invite others to try and explore.</span>
-        <span class="emoji-pattern" aria-hidden="true">🤝</span>
-      </article>
-      <article class="insight-card" data-tone="industry">
-        <span class="principle-icon material-symbols-rounded" aria-hidden="true">ink_pen</span>
-        <small class="status">3. Show Your Work</small>
-        <strong>Wins, mistakes, experiments. Share everything.</strong>
-        <span>Learning in public beats polished perfection.</span>
-        <span class="emoji-pattern" aria-hidden="true">📓</span>
-      </article>
-      <article class="insight-card" data-tone="ai">
-        <span class="principle-icon material-symbols-rounded" aria-hidden="true">diversity_3</span>
-        <small class="status">4. Design for People</small>
-        <strong>Start with real needs.</strong>
-        <span>Build tech that helps someone actually do something.</span>
-        <span class="emoji-pattern" aria-hidden="true">⭐️</span>
-      </article>
-    </div>
-  </section>
-  
-
-  <!-- ROW 4: PROGRESS + ROADMAP -->
-  <section class="row-panels" aria-label="Progress and roadmap">
-    <article class="panel-card achievements" aria-label="Shipped foundations">
-      <p class="panel-kicker">WHAT I’VE DONE SO FAR</p>
-      <h2 class="panel-headline">In the classroom I've learned the following:</h2>
-      <div class="achievement-list">
-        <div class="achievement-item" data-tone="iot">
-          <div class="achievement-meta">
-            <span class="achievement-number">01</span>
-            <span class="achievement-icon material-symbols-rounded" aria-hidden="true">hub</span>
-          </div>
-          <div class="achievement-body">
-            <p class="achievement-tag">ESP32 • HIVEMQ</p>
-            <h3>MQTT &amp; IoT Basics</h3>
-            <p>Simulated ESP32 on Wokwi, pulsed telemetry into HiveMQ, and wrote watchdog callbacks that keep the heartbeat alive.</p>
-          </div>
-        </div>
-        <div class="achievement-item" data-tone="robotics">
-          <div class="achievement-meta">
-            <span class="achievement-number">02</span>
-            <span class="achievement-icon material-symbols-rounded" aria-hidden="true">robot_2</span>
-          </div>
-          <div class="achievement-body">
-            <p class="achievement-tag">KINEMATICS</p>
-            <h3>Robotics Foundations</h3>
-            <p>Mapped forward &amp; inverse kinematics, learned to simplify using DH, and sketched motion envelopes that keep robots both swift and safe. Additionally, examined ways of dealing with Jitter.</p>
-          </div>
-        </div>
-        <div class="achievement-item" data-tone="ml">
-          <div class="achievement-meta">
-            <span class="achievement-number">03</span>
-            <span class="achievement-icon material-symbols-rounded" aria-hidden="true">auto_graph</span>
-          </div>
-          <div class="achievement-body">
-            <p class="achievement-tag">KAGGLE • PLAYBOOK</p>
-            <h3>Machine Learning Practice</h3>
-            <p>Built a routine for cleaning, visualizing, feature space reasoning, and utilizing small reliable ensembles such as XGBoost. Used the framework in a Kaggle Competition.</p>
-          </div>
-        </div>
-        <div class="achievement-item" data-tone="modeling">
-          <div class="achievement-meta">
-            <span class="achievement-number">04</span>
-            <span class="achievement-icon material-symbols-rounded" aria-hidden="true">view_in_ar</span>
-          </div>
-          <div class="achievement-body">
-            <p class="achievement-tag">BLENDER • MCP</p>
-            <h3>3D Modeling with AI Assistants</h3>
-            <p>Recreated a real coffee cup in Blender, bouncing between MCP servers, Claude, and ChatGPT Codex to co-pilot the mesh.</p>
-          </div>
-        </div>
-      </div>
+      <h2 class="demo-title">Ko-Br Internship Demo Day</h2>
     </article>
-    <article class="panel-card coming-panel" aria-label="Coming soon">
-      <div class="marquee-ribbon" aria-hidden="true">
-        <div class="marquee-track">
-          Coming Soon • Loading • Coming Soon • Loading • Coming Soon • Loading • Coming Soon • Loading •
-          Coming Soon • Loading • Coming Soon • Loading • Coming Soon • Loading • Coming Soon • Loading •
-        </div>
+
+    <article class="demo-showcase" data-section="2" aria-label="Cloud Garden and Cave preview">
+      <div class="demo-media raytracer-media">
+        <iframe
+          id="section2Preview"
+          class="demo-raytracer"
+          src="raytracer-cloud-garden-embed-light.html"
+          data-light-src="raytracer-cloud-garden-embed-light.html"
+          data-dark-src="raytracer-cave-embed-dark.html"
+          title="Cloud Garden and Cave preview"
+          loading="eager"
+          allow="accelerometer; gyroscope"
+          aria-hidden="true"></iframe>
+        <figure class="nti-photo" aria-label="NTI Demo">
+          <img
+            id="ntiDemoImage"
+            src="NTI-Image.png"
+            data-light-src="NTI-Image.png"
+            data-dark-src="NTI-Image_Dark.png"
+            width="750"
+            height="900"
+            alt="NTI Demo"
+            loading="eager"
+            fetchpriority="high"
+            decoding="async"
+            onload="this.classList.add('loaded')">
+        </figure>
       </div>
-      <p class="panel-kicker">COMING SOON</p>
-      <div class="coming-title">
-        <h2>I'm Tinkering <span>& Experimenting</span></h2>
-        <div class="coming-star-wrap">
-          <img src="Tinkering-Light.png" alt="Tinkering prototype" class="coming-art coming-art-light" loading="lazy">
-          <img src="Tinkering-Dark.png" alt="Tinkering prototype" class="coming-art coming-art-dark" loading="lazy">
-          <span class="coming-star">✶</span>
-        </div>
-      </div>
-      <div class="coming-grid">
-        <p class="coming-lede">Currently hacking on OpenAI’s Parameter Golf challenge—compressing intelligence into an incredibly small model (16MB).</p>
-        <blockquote class="coming-quote">"I thought art was a verb, rather than a noun" - Yoko Ono</blockquote>
-      </div>
+      <h2 class="demo-title">Digital Twin Engineering Demo</h2>
     </article>
   </section>
 
-  <!-- ROW 6: CTA -->
+  <!-- FOOTER -->
   <section class="row-cta" aria-label="Reach out">
     <div class="cta-shell">
       <h2>Thanks for following along</h2>
@@ -1308,7 +1263,7 @@ burger.addEventListener('click', ()=>{
 drawer.querySelectorAll('a').forEach(a=>{ a.addEventListener('click',()=> setMenuState(false)); });
 
 /* ==== balanced wheel glyphs ==== */
-const phrase = "D I G I T A L  T W I N  🤖  B L O G  🤗  H O M E  🦾  ";
+const phrase = "D I G I T A L  T W I N  🤖  B L O G  🤗  D E M O S  🦾  ";
 const svg = document.querySelector('#badge svg');
 const vb = svg.viewBox?.baseVal || { x:0, y:0, width:100, height:100 };
 const CX = vb.width / 2, CY = vb.height / 2;
@@ -1404,17 +1359,68 @@ const THEME_KEY='ytwin-theme';
 const root=document.documentElement;
 const btn=document.getElementById('themeToggle');
 const headerEl=document.querySelector('.header');
-const starImg=document.querySelector('.art-copy img.star');
+const raytracerPreview=document.getElementById('raytracerPreview');
+const section2Preview=document.getElementById('section2Preview');
+const kobrDemoImage=document.getElementById('kobrDemoImage');
+const ntiDemoImage=document.getElementById('ntiDemoImage');
+const EYES_CURSOR='url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2732%27 height=%2732%27 viewBox=%270 0 32 32%27%3E%3Ctext x=%2716%27 y=%2723%27 font-size=%2724%27 text-anchor=%27middle%27%3E%F0%9F%91%80%3C/text%3E%3C/svg%3E") 16 16, auto';
 
-function syncStarClass(mode){
-  if(!starImg) return;
-  starImg.classList.toggle('is-dark', mode==='dark');
+function swapImageForTheme(image, mode){
+  if(!image) return;
+  const nextSrc = mode === 'dark' ? image.dataset.darkSrc : image.dataset.lightSrc;
+  if(nextSrc && !image.getAttribute('src').endsWith(nextSrc)){
+    image.classList.remove('loaded');
+    image.setAttribute('src', nextSrc);
+  }
+}
+
+function swapFrameForTheme(frame, mode){
+  if(!frame) return;
+  const nextSrc = mode === 'dark' ? frame.dataset.darkSrc : frame.dataset.lightSrc;
+  if(nextSrc && frame.getAttribute('src') !== nextSrc){
+    frame.setAttribute('src', nextSrc);
+  }
+}
+
+function syncEmbeddedCursor(frame){
+  if(!frame) return;
+  frame.style.cursor = EYES_CURSOR;
+  try {
+    const doc = frame.contentDocument;
+    if(!doc) return;
+    const targets = [
+      doc.documentElement,
+      doc.body,
+      doc.querySelector('.page'),
+      doc.querySelector('.stage'),
+      doc.querySelector('.viewport'),
+      doc.querySelector('canvas'),
+    ].filter(Boolean);
+    for (const target of targets) {
+      target.style.cursor = EYES_CURSOR;
+    }
+  } catch (_error) {
+    // Same-origin in this project, but ignore if the iframe isn't ready yet.
+  }
+}
+
+function scheduleEmbeddedCursorSync(frame, attempts = 8){
+  if(!frame || attempts <= 0) return;
+  syncEmbeddedCursor(frame);
+  window.setTimeout(()=>scheduleEmbeddedCursorSync(frame, attempts - 1), 120);
 }
 
 function applyTheme(mode){
   if(mode==='dark'){ root.classList.add('dark'); btn.textContent='☀️'; btn.title='Switch to light mode'; }
   else{ root.classList.remove('dark'); btn.textContent='🌙'; btn.title='Switch to dark mode'; }
-  syncStarClass(mode);
+  swapImageForTheme(kobrDemoImage, mode);
+  swapImageForTheme(ntiDemoImage, mode);
+  swapFrameForTheme(raytracerPreview, mode);
+  swapFrameForTheme(section2Preview, mode);
+  requestAnimationFrame(()=>{
+    scheduleEmbeddedCursorSync(raytracerPreview);
+    scheduleEmbeddedCursorSync(section2Preview);
+  });
   updateBadgeOverlap();
 }
 /* Always default to light theme on load */
@@ -1423,6 +1429,11 @@ localStorage.setItem(THEME_KEY,'light');
 btn.addEventListener('click',()=>{
   const next = root.classList.contains('dark') ? 'light' : 'dark';
   localStorage.setItem(THEME_KEY,next); applyTheme(next);
+});
+
+[raytracerPreview, section2Preview].filter(Boolean).forEach((frame)=>{
+  frame.addEventListener('load', ()=>scheduleEmbeddedCursorSync(frame));
+  frame.addEventListener('mouseenter', ()=>scheduleEmbeddedCursorSync(frame, 3));
 });
 
 /* Auto-hide for the fixed button + sync header padding */
@@ -1536,7 +1547,6 @@ syncHeaderCompact();
 
   window.setCopyPos  = (leftVW, topVH)=>{ copyLeftVW = leftVW; copyTopVH = topVH; apply(); };
   window.setCopySize = (widthVW, textRem)=>{ copyWidthVW = widthVW; copyTextRem = textRem; apply(); };
-  window.setStarSize = (vw)=> root.style.setProperty('--copy-star', vw + 'vw');
 })();
 </script>
 
